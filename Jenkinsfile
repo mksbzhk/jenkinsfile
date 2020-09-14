@@ -1,5 +1,8 @@
 node {
 	stage('Pull'){
+		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
+			sh 'rm -rf $(pwd)/*'
+		}
 		git branch: '${GIT_TAG_BRANCH#*/}', url: '${GIT_REPO_SSH_URL}'
 	}
 
