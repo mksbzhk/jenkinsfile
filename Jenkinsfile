@@ -2,6 +2,7 @@ node {
 	stage('Pull'){
 		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
 			sh 'rm -rf $(pwd)/*'
+			sh 'rm -rf .git'
 		}
 		git branch: '${GIT_TAG_BRANCH#*/}', url: '${GIT_REPO_SSH_URL}'
 	}
