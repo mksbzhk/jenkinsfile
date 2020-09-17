@@ -25,7 +25,7 @@ node {
 	stage('Plan'){
 		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
 			docker.image('hashicorp/terraform:0.12.21').inside('--env-file ${WORKSPACE}/dockerenv --entrypoint=""'){
-				sh script: '''#!/bin/bash
+				sh script: '''#!/bin/sh
 				terraform plan -out planfile'''
 			}
 		}
@@ -40,7 +40,7 @@ node {
 
 		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
 			docker.image('hashicorp/terraform:0.12.21').inside('--env-file ${WORKSPACE}/dockerenv --entrypoint""'){
-				sh script: '''#!/bin/bash
+				sh script: '''#!/bin/sh
 				terraform apply -input=false "planfile"'''
 			}
 		}
