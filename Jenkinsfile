@@ -14,7 +14,7 @@ node {
 			env | grep "TF_VAR_" >> dockerenv'''
 
 			docker.image('hashicorp/terraform:0.12.21').inside('--env-file ${WORKSPACE}/dockerenv --entrypoint=""'){
-				sh script: '''#!/bin/bash
+				sh script: '''#!/bin/sh
 				terraform --version
 				terraform init -backend-config="access_key=$AWS_STATE_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_STATE_SECRET_ACCESS_KEY" -backend-config="region=$AWS_STATE_DEFAULT_REGION" -backend-config="bucket=$AWS_STATE_BUCKET"
 				terraform validate'''
