@@ -11,12 +11,12 @@ node {
 		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
 			sh script: '''#!/bin/bash
 			env | grep AWS > dockerenv
-			env | grep ENV >> dockerenv'''
+			env | grep "TF_VAR_" >> dockerenv'''
 
 			docker.image('hashicorp/terraform:0.12.21').inside('--env-file ${WORKSPACE}/dockerenv'){
 				sh script: '''#!/bin/bash
 				terraform --version
-				terraform init -backend-config="access_key=$STATE_AWS_ACCESS_KEY_ID" -backend-config="secret_key=$STATE_AWS_SECRET_ACCESS_KEY" -backend-config="region=$STATE_AWS_DEFAULT_REGION" -backend-config="bucket=$STATE_AWS_BUCKET"
+				terraform init -backend-config="access_key=$AWS_STATE_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_STATE_SECRET_ACCESS_KEY" -backend-config="region=$AWS_STATE_DEFAULT_REGION" -backend-config="bucket=$AWS_STATE_BUCKET"
 				terraform validate'''
 			}
 		}
