@@ -4,7 +4,7 @@ node {
 			sh 'rm -rf $(pwd)/*'
 			sh 'rm -rf .git'
 		}
-		git branch: '${GIT_TAG_BRANCH}', url: '${GIT_REPO_SSH_URL}'
+		checkout([$class: 'GitSCM', branches: [[name: '${GIT_TAG_BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]], submoduleCfg: [], userRemoteConfigs: [[url: '${GIT_REPO_SSH_URL}']]])
 	}
 
 	stage('Validate'){
